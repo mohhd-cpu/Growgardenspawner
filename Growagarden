@@ -1,0 +1,113 @@
+-- Services
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local HttpService = game:GetService("HttpService")
+local setclipboard = setclipboard or toclipboard or set_clipboard
+
+-- GUI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "KeySystem"
+ScreenGui.Parent = game.CoreGui -- ✅ Use CoreGui for stability
+
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 350, 0, 200)
+Frame.Position = UDim2.new(0.5, -175, 0.5, -100)
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.BorderSizePixel = 0
+Frame.Parent = ScreenGui
+Frame.Active = true
+Frame.Draggable = true -- ✅ Make draggable
+
+local Title = Instance.new("TextLabel")
+Title.Text = "🔑 Enter Key Below"
+Title.Size = UDim2.new(1, -30, 0, 30)
+Title.Position = UDim2.new(0, 0, 0, 0)
+Title.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Font = Enum.Font.SourceSansBold
+Title.TextSize = 20
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = Frame
+
+local CloseButton = Instance.new("TextButton")
+CloseButton.Text = "❌"
+CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Position = UDim2.new(1, -30, 0, 0)
+CloseButton.BackgroundColor3 = Color3.fromRGB(180, 50, 50)
+CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseButton.Font = Enum.Font.SourceSansBold
+CloseButton.TextSize = 18
+CloseButton.Parent = Frame
+
+local TextBox = Instance.new("TextBox")
+TextBox.PlaceholderText = "Enter Key Here"
+TextBox.Size = UDim2.new(0.9, 0, 0, 40)
+TextBox.Position = UDim2.new(0.05, 0, 0, 50)
+TextBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.Font = Enum.Font.SourceSans
+TextBox.TextSize = 18
+TextBox.Parent = Frame
+
+local GetKeyButton = Instance.new("TextButton")
+GetKeyButton.Text = "🔗 Get Key (Copy Link)"
+GetKeyButton.Size = UDim2.new(0.9, 0, 0, 35)
+GetKeyButton.Position = UDim2.new(0.05, 0, 0, 100)
+GetKeyButton.BackgroundColor3 = Color3.fromRGB(70, 130, 180)
+GetKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+GetKeyButton.Font = Enum.Font.SourceSansBold
+GetKeyButton.TextSize = 17
+GetKeyButton.Parent = Frame
+
+local CheckKeyButton = Instance.new("TextButton")
+CheckKeyButton.Text = "✅ Check Key"
+CheckKeyButton.Size = UDim2.new(0.9, 0, 0, 35)
+CheckKeyButton.Position = UDim2.new(0.05, 0, 0, 140)
+CheckKeyButton.BackgroundColor3 = Color3.fromRGB(34, 139, 34)
+CheckKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CheckKeyButton.Font = Enum.Font.SourceSansBold
+CheckKeyButton.TextSize = 17
+CheckKeyButton.Parent = Frame
+
+local Message = Instance.new("TextLabel")
+Message.Size = UDim2.new(1, 0, 0, 20)
+Message.Position = UDim2.new(0, 0, 1, -20)
+Message.BackgroundTransparency = 1
+Message.TextColor3 = Color3.fromRGB(255, 255, 255)
+Message.Font = Enum.Font.SourceSansItalic
+Message.TextSize = 16
+Message.Text = ""
+Message.Parent = Frame
+
+-- SETTINGS --
+local CorrectKey = "Best2000scriptgag"
+local Linkvertise = "https://direct-link.net/1360130/anEvmb4VNPfL"
+local YourScript = "https://raw.githubusercontent.com/mohhd-cpu/Growwagarden/refs/heads/main/14bdcfb1712aecd0f9973fe8057a622c.txt"
+
+-- FUNCTIONS --
+
+GetKeyButton.MouseButton1Click:Connect(function()
+    if setclipboard then
+        setclipboard(Linkvertise)
+        Message.Text = "📋 Link copied! Complete it to get the key."
+    else
+        Message.Text = "❌ Clipboard not supported."
+    end
+end)
+
+CheckKeyButton.MouseButton1Click:Connect(function()
+    local inputKey = TextBox.Text
+
+    if inputKey == CorrectKey then
+        Message.Text = "✅ Correct Key! Loading Script..."
+        wait(1)
+        ScreenGui:Destroy()
+        loadstring(game:HttpGet(YourScript))()
+    else
+        Message.Text = "❌ Wrong Key. Try Again."
+    end
+end)
+
+CloseButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
